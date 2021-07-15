@@ -43,3 +43,5 @@
 -> sudo dnf install lutris
 
 -> sudo dnf install steam
+
+-> https://docs.fedoraproject.org/en-US/quick-docs/dnf/#_using_the_dnf_versionlock_plugin # Lockar o audacity
