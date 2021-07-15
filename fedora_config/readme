@@ -1,0 +1,45 @@
+# Instalação Customizada
+
+1) Selecionar "Minimal Install"
+
+2) Seguir a instalação normal e reiniciar
+
+2.5) max_parallel_downloads=10 to /etc/dnf/dnf.conf
+
+3) sudo dnf install @base-x gnome-shell gnome-terminal nautilus firefox
+
+4) sudo systemctl set-default graphical.target
+
+5) reboot
+
+6) sudo dnf install gnome-terminal-nautilus xdg-user-dirs xgd-user-dirs-gtk ffmpgegthumbnailer gnome-calculator gnome-system-monitor
+
+7) sudo dnf install $(tr '\n' ' ' < pkgs)
+
+8) https://docs.fedoraproject.org/en-US/quick-docs/setup_rpmfusion/
+
+9) https://docs.fedoraproject.org/en-US/quick-docs/assembly_installing-plugins-for-playing-movies-and-music/
+
+10) Instalar os pacotes extras (extra_pkgs)
+
+11) https://docs.fedoraproject.org/en-US/quick-docs/how-to-set-nvidia-as-primary-gpu-on-optimus-based-laptops/
+
+12) cargo install $(tr '\n' ' ' < cargo_pkgs)
+
+13) https://github.com/VundleVim/Vundle.vim
+
+14) https://github.com/neoclide/coc.nvim
+
+15) https://rust-analyzer.github.io/manual.html#vimneovim
+
+16) Configurar o firefox (bookmarks + addons)
+
+17) Configurar o ckb-next
+
+# Extras 
+
+-> https://sourceforge.net/projects/hplip/files/hplip/3.21.6/hplip-3.21.6.run/download?use_mirror=nchc
+
+-> sudo dnf install lutris
+
+-> sudo dnf install steam

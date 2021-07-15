@@ -1,0 +1,70 @@
+# Instalação Customizada
+
+(0) pacman -Sy && pacman -S tmux # multiplexar os terminais
+
+(1) loadkeys br-abnt2 # carregar layout correto
+		1.1) tmux -> <C-b> + :split-window (") OU % -> <C-b> right/left # separar a tela e instanciar o vim
+
+(2) ls /sys/firmware/efi/efivars # confirmar modo UEFI
+
+(3) ping archlinux.org # confirmar conexão a internet
+
+(4) timedatectl set-ntp true # clock do sistema
+
+(5) fdisk -l /dev/sda # Verificar se as partições estão corretas
+		/dev/sda1        2048    1050623    1048576   512M    EFI System # Montar /boot nessa partição
+		/dev/sda2 (?)	   ?		?			?	  346,1G      ? 	 # Montar / nessa partição
+		/dev/sda3 (?)	   ?		?			?	  1000G       ?	     # Montar /home nessa partição
+		... # De resto são 2 partições "Microsoft" que não vem ao caso
+(6) mkdir /mnt/boot /mnt/home # Criar os diretórios das partições
+
+(7) mount /dev/sda1 /mnt/boot && mount /dev/sda2 /mnt && mount /dev/sda3 /mnt/home # Montar os 3 diretórios corretamente
+(7.1) :vsp /etc/pacman.d/mirrorlist # Adicionar os mirrors BRs (nessa sessão do vim)
+Server = http://br.mirror.archlinux-br.org/$repo/os/$arch
+Server = http://archlinux.c3sl.ufpr.br/$repo/os/$arch
+Server = http://www.caco.ic.unicamp.br/archlinux/$repo/os/$arch
+Server = https://www.caco.ic.unicamp.br/archlinux/$repo/os/$arch
+Server = http://linorg.usp.br/archlinux/$repo/os/$arch
+Server = http://archlinux.pop-es.rnp.br/$repo/os/$arch
+Server = http://mirror.ufam.edu.br/archlinux/$repo/os/$arch
+Server = http://mirror.ufscar.br/archlinux/$repo/os/$arch
+
+
+(8) pacstrap /mnt base linux linux-firmware dhcpcd
+
+(9) genfstab -U /mnt >> /mnt/etc/fstab; vim /mnt/etc/fstab # Criar a fstab e checar a montagem das partiçoes
+
+(10) arch-chroot /mnt
+
+(11) systemctl enable dhcpcd.service # Habilitar dhcp no startup
+
+(12) ln -sf /usr/share/zoneinfo/Brazil/East /etc/localtime
+
+(13) hwclock --systohc
+
+(14) vim /etc/locale.gen # Editar e descomentar linhas com en_US e pt_BR
+
+(15) locale-gen
+
+(16) echo "LANG=en_US.UTF-8" > /etc/locale.conf # Definir locale padrão
+
+(17) echo "KEYMAP=br-abnt2" > /etc/vconsole.conf # Definir layout do teclado padrão
+
+(18) echo "aarchfd" > /etc/hostname
+
+(19) vim /etc/hosts
+		127.0.0.1	localhost
+		::1			localhost
+		127.0.1.1	aarchfd.localdomain aarchfd
+
+(20) passwd # Senha para o root
+
+(21) pacman -S grub efibootmgr # Instalação do bootloader
+
+(22) grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB # Instalar GRUB em /boot/efi
+
+(23) pacman -S intel-ucode # Instalar o microcode da intel
+
+(24) grub-mkconfig -o /boot/grub/grub.cfg # Gerar a configuração da GRUB
+
+(25) <Ctrl-d> -> umount -R /mnt; reboot # Sair do chroot e reiniciar

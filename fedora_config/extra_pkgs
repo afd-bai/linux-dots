@@ -1,0 +1,5 @@
+teams # https://linuxhint.com/install-microsoft-teams-fedora
+windscribe-cli # https://windscribe.com/guides/linux
+razercfg # wget https://bues.ch/releases/razercfg/razercfg-0.42.tar.xz
+ffmpeg # RPM Fusion
+rust # curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
